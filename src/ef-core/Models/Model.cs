@@ -34,6 +34,13 @@ namespace ef_core.Models
                 modelBuilder.Entity<Member>()
                     .Property(m => m.UpdatedDate)
                     .ValueGeneratedOnAddOrUpdate();
+                modelBuilder.Entity<Member>()
+                    .Property(m => m.Name)
+                    .IsConcurrencyToken();
+                modelBuilder.Entity<Member>()
+                    .Property(m => m.TimeStamp)
+                    .ValueGeneratedOnAddOrUpdate()
+                    .IsConcurrencyToken();
             }
             public DbSet<Blog> Blogs { get; set; }
             public DbSet<Post> Posts { get; set; }
@@ -68,6 +75,7 @@ namespace ef_core.Models
             public DateTime InsertedDate { get; set; }
             public DateTime UpdatedDate { get; set; }
             public string MustBeAssigned { get; set; }
+            public byte TimeStamp { get; set; }
         }
     }
 }
