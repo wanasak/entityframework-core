@@ -21,6 +21,15 @@ namespace ef_core.Models
                 // composite key
                 //modelBuilder.Entity<Member>()
                 //    .HasKey(m => new { m.MemberKey, m.Name });
+                modelBuilder.Entity<Member>()
+                    .Property(m => m.MustBeAssigned)
+                    .ValueGeneratedNever();
+                modelBuilder.Entity<Member>()
+                    .Property(m => m.InsertedDate)
+                    .ValueGeneratedOnAdd();
+                modelBuilder.Entity<Member>()
+                    .Property(m => m.UpdatedDate)
+                    .ValueGeneratedOnAddOrUpdate();
             }
             public DbSet<Blog> Blogs { get; set; }
             public DbSet<Post> Posts { get; set; }
@@ -51,6 +60,9 @@ namespace ef_core.Models
         {
             public int MemberKey { get; set; }
             public string Name { get; set; }
+            public DateTime InsertedDate { get; set; }
+            public DateTime UpdatedDate { get; set; }
+            public string MustBeAssigned { get; set; }
         }
     }
 }
