@@ -16,6 +16,9 @@ namespace ef_core.Models
                 modelBuilder.Ignore<BlogMetaData>();
                 modelBuilder.Entity<Blog>()
                     .Ignore(b => b.LoadedFromDatabase);
+                modelBuilder.Entity<Blog>()
+                    .Property(b => b.Url)
+                    .IsRequired();
                 modelBuilder.Entity<Member>()
                     .HasKey(m => m.MemberKey);
                 // composite key
@@ -40,6 +43,7 @@ namespace ef_core.Models
             public int BlogId { get; set; }
             public string Url { get; set; }
             public DateTime LoadedFromDatabase { get; set; }
+            public byte? Rating { get; set; }
 
             public List<Post> Posts { get; set; }
         }
