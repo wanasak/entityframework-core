@@ -11,6 +11,10 @@ namespace ef_core.Models
         public class BloggingContext : DbContext
         {
             public BloggingContext(DbContextOptions<BloggingContext> options) : base (options) { }
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder.Ignore<BlogMetaData>();
+            }
             public DbSet<Blog> Blogs { get; set; }
             public DbSet<Post> Posts { get; set; }
         }
@@ -29,6 +33,10 @@ namespace ef_core.Models
 
             public int BlogId { get; set; }
             public Blog Blog { get; set; }
+        }
+        public class BlogMetaData
+        {
+            public DateTime LoadedFromDatabase { get; set; }
         }
     }
 }
