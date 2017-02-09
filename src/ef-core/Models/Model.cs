@@ -18,7 +18,8 @@ namespace ef_core.Models
                     .Ignore(b => b.LoadedFromDatabase);
                 modelBuilder.Entity<Blog>()
                     .Property(b => b.Url)
-                    .IsRequired();
+                    .IsRequired()
+                    .HasMaxLength(500);
                 modelBuilder.Entity<Member>()
                     .HasKey(m => m.MemberKey);
                 // composite key
