@@ -14,14 +14,23 @@ namespace ef_core.Models
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 modelBuilder.Ignore<BlogMetaData>();
+                modelBuilder.Entity<Blog>()
+                    .Ignore(b => b.LoadedFromDatabase);
+                modelBuilder.Entity<Member>()
+                    .HasKey(m => m.MemberKey);
+                // composite key
+                //modelBuilder.Entity<Member>()
+                //    .HasKey(m => new { m.MemberKey, m.Name });
             }
             public DbSet<Blog> Blogs { get; set; }
             public DbSet<Post> Posts { get; set; }
+            public DbSet<Member> Members { get; set; }
         }
         public class Blog
         {
             public int BlogId { get; set; }
             public string Url { get; set; }
+            public DateTime LoadedFromDatabase { get; set; }
 
             public List<Post> Posts { get; set; }
         }
@@ -37,6 +46,11 @@ namespace ef_core.Models
         public class BlogMetaData
         {
             public DateTime LoadedFromDatabase { get; set; }
+        }
+        public class Member
+        {
+            public int MemberKey { get; set; }
+            public string Name { get; set; }
         }
     }
 }
