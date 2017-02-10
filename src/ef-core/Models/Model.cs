@@ -10,7 +10,7 @@ namespace ef_core.Models
     {
         public class BloggingContext : DbContext
         {
-            public BloggingContext(DbContextOptions<BloggingContext> options) : base (options) { }
+            public BloggingContext(DbContextOptions<BloggingContext> options) : base(options) { }
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 modelBuilder.Ignore<BlogMetaData>();
@@ -41,6 +41,9 @@ namespace ef_core.Models
                     .Property(m => m.TimeStamp)
                     .ValueGeneratedOnAddOrUpdate()
                     .IsConcurrencyToken();
+                modelBuilder.Entity<Member>()
+                    .HasIndex()
+                    .IsUnique();
             }
             public DbSet<Blog> Blogs { get; set; }
             public DbSet<Post> Posts { get; set; }
@@ -76,6 +79,7 @@ namespace ef_core.Models
             public DateTime UpdatedDate { get; set; }
             public string MustBeAssigned { get; set; }
             public byte TimeStamp { get; set; }
+            public string Index { get; set; }
         }
     }
 }
