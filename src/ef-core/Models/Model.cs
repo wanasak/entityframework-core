@@ -44,6 +44,8 @@ namespace ef_core.Models
                 modelBuilder.Entity<Member>()
                     .HasIndex()
                     .IsUnique();
+                modelBuilder.Entity<Member>()
+                    .HasAlternateKey(m => m.MemberCode);
             }
             public DbSet<Blog> Blogs { get; set; }
             public DbSet<Post> Posts { get; set; }
@@ -80,6 +82,7 @@ namespace ef_core.Models
             public string MustBeAssigned { get; set; }
             public byte TimeStamp { get; set; }
             public string Index { get; set; }
+            public string MemberCode { get; set; }
         }
     }
 }
