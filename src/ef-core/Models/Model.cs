@@ -46,10 +46,13 @@ namespace ef_core.Models
                     .IsUnique();
                 modelBuilder.Entity<Member>()
                     .HasAlternateKey(m => m.MemberCode);
+                modelBuilder.Entity<Category>()
+                    .Property<DateTime>("LastUpdated");
             }
             public DbSet<Blog> Blogs { get; set; }
             public DbSet<Post> Posts { get; set; }
             public DbSet<Member> Members { get; set; }
+            public DbSet<Category> Categories { get; set; }
         }
         public class Blog
         {
@@ -83,6 +86,11 @@ namespace ef_core.Models
             public byte TimeStamp { get; set; }
             public string Index { get; set; }
             public string MemberCode { get; set; }
+        }
+        public class Category
+        {
+            public int CategoryId { get; set; }
+            public string Name { get; set; }
         }
     }
 }
