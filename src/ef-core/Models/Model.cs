@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace ef_core.Models
 {
@@ -20,6 +21,9 @@ namespace ef_core.Models
                     .Property(b => b.Url)
                     .IsRequired()
                     .HasMaxLength(500);
+                modelBuilder.Entity<Blog>()
+                    .Property(b => b.Url)
+                    .HasField("_validatedUrl");
                 modelBuilder.Entity<Member>()
                     .HasKey(m => m.MemberKey);
                 // composite key
@@ -56,8 +60,21 @@ namespace ef_core.Models
         }
         public class Blog
         {
+            private string _validatedUrl;
             public int BlogId { get; set; }
-            public string Url { get; set; }
+            public string Url
+            {
+                get { return _validatedUrl; }
+            }
+            public void SetUrl(string url)
+            {
+                using (var client = new HttpClient())
+                {   
+                    var response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
+                }   
+                _validatedUrl = url;
+            }
             public DateTime LoadedFromDatabase { get; set; }
             public byte? Rating { get; set; }
 
